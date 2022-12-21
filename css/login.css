@@ -1,0 +1,138 @@
+/* For desktop: */
+.col-1 {
+  width: 8.33%;
+}
+.col-2 {
+  width: 16.66%;
+}
+.col-3 {
+  width: 25%;
+}
+.col-4 {
+  width: 33.33%;
+}
+.col-5 {
+  width: 41.66%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-7 {
+  width: 58.33%;
+}
+.col-8 {
+  width: 66.66%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-10 {
+  width: 83.33%;
+}
+.col-11 {
+  width: 91.66%;
+}
+.col-12 {
+  width: 100%;
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  border: 1px solid black;
+  background: #ff8380;
+  display: flex;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.form-content {
+  background: #e8ddbf;
+  text-align: center;
+  margin: 100px 35% 100px 35%;
+  border-radius: 50%;
+}
+.form-table {
+  padding: 50px;
+}
+#labelForm {
+  color: #696b65;
+}
+.form-table input {
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: none;
+  padding: 10px;
+  width: 300px;
+}
+.checkPasswordIcon {
+  position: relative;
+}
+
+.checkPasswordIcon i {
+  position: absolute;
+  right: 10%;
+  top: 10px;
+}
+#signInBtn {
+  background: #e6a760;
+  width: 300px;
+  border-radius: 12px;
+  padding: 5px;
+  border: none;
+  transition: 1s;
+  background: linear-gradient(90deg, var(--c1, #f6d365), var(--c2, #fda085) 51%, var(--c1, #f6d365)) var(--x, 0)/ 200%;
+}
+#signInBtn:hover {
+  cursor: pointer;
+  --x: 100%;
+}
+#losePassword {
+    display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  /* For tablets: */
+  .checkPasswordIcon i {
+    position: absolute;
+    right: 14%;
+  }
+  .form-content {
+    background: #e8ddbf;
+    text-align: center;
+    margin: 100px 18% 100px 18%;
+    border-radius: 50%;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .form-content {
+    background: #e8ddbf;
+    text-align: center;
+    margin: 100px 5% 100px 5%;
+    border-radius: 50%;
+    font-size: 14px;
+  }
+  .form-table input {
+    margin-bottom: 8px;
+    border-radius: 12px;
+    padding: 10px;
+    width: 250px;
+  }
+  .checkPasswordIcon i {
+    position: absolute;
+    right: 12%;
+  }
+  .alertCheck {
+    font-size: 8px;
+  }
+  #signInBtn {
+    width: 250px;
+  }
+  .footerLogin {
+    font-size: 12px;
+  }
+}

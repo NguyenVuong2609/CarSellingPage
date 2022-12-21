@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LogIn</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <script
+      src="https://kit.fontawesome.com/36502a9996.js"
+      crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+    <div class="container col-12">
+        <div class="form-content col-12">
+            <form action="" method="get" class="form-table" id="signInform">
+                <label for="" id="labelForm">Login</label><br>
+                <input type="text" placeholder="Email" id="inputID" required><br>
+                <div class="checkPasswordIcon">
+                    <input type="password" placeholder="Password" id="inputPassword" required>
+                    <i id="iconEye" class="fa-regular fa-eye-slash"></i>
+                </div>
+                <div id="checkAcc" class="alertCheck"></div>
+                <button type="submit" id="signInBtn" onclick="checkAccount()">Sign In</button>
+                <div class="footerLogin">
+                    <span>Don't have an account?</span>
+                    <a href="/Pages/register.html">Register</a><br>
+                    <span id="losePassword">Forgot password? <a href="/Pages/getnewPassword.html">Click here!</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="/JS/login.js"></script>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/register.css">
+    <script
+      src="https://kit.fontawesome.com/36502a9996.js"
+      crossorigin="anonymous"
+    ></script>
+</head>
+<body>
+    <div class="container col-12">
+        <div class="form-content col-12">
+            <form action="" method="get" class="form-table" id="signUpform">
+                <label for="" id="labelForm">Register</label><br>
+                <input type="text" placeholder="Email" id="inputID"><br>
+                <div id="valiadteID" class="alertCheck"></div>
+                <div class="checkPasswordIcon">
+                    <input type="password" placeholder="Password" id="inputPassword">
+                    <i id="iconEye" class="fa-regular fa-eye-slash"></i>
+                </div>
+                <div id="validatePassword1" class="alertCheck"></div><br>
+                <div class="checkPasswordIcon">
+                    <input type="password" placeholder="Confirmed Password" id="checkPassword">
+                    <i id="iconEye1" class="fa-regular fa-eye-slash"></i>
+                </div>
+                <div id="validatePassword2" class="alertCheck"></div>
+                <label for="">Security question:</label><br>
+                <input type="text" placeholder="What's your Childhood Nickname?" id="keyQuestion" required><br>
+                <div id="checkAccount" class="alertCheck"></div>
+                <button type="submit" id="signUpBtn" onclick="newMember()">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script src="/JS/register.js"></script>
+</html>

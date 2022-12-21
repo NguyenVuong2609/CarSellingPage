@@ -1,0 +1,174 @@
+/* For desktop: */
+.col-1 {
+  width: 8.33%;
+}
+.col-2 {
+  width: 16.66%;
+}
+.col-3 {
+  width: 25%;
+}
+.col-4 {
+  width: 33.33%;
+}
+.col-5 {
+  width: 41.66%;
+}
+.col-6 {
+  width: 50%;
+}
+.col-7 {
+  width: 58.33%;
+}
+.col-8 {
+  width: 66.66%;
+}
+.col-9 {
+  width: 75%;
+}
+.col-10 {
+  width: 83.33%;
+}
+.col-11 {
+  width: 91.66%;
+}
+.col-12 {
+  width: 100%;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: "Gill Sans", "Gill Sans MT", "Calibri", "Trebuchet MS",
+    sans-serif;
+  background-color: white;
+}
+.container {
+  display: flex;
+}
+.nav-menu {
+  background: #2c3338;
+  color: white;
+  font-size: 28px;
+  text-align: center;
+  position: relative;
+}
+.nav-menu input {
+  width: 100%;
+  padding: 10px;
+  background-color: #ff8380;
+  color: white;
+  border: 2px solid white;
+}
+.nav-menu input:hover {
+  cursor: pointer;
+  filter: drop-shadow(2px 2px 2px white);
+  background-image: -webkit-linear-gradient(
+    left,
+    #73d2f6,
+    #08c 22%,
+    #7fc400 36%,
+    #ffd583 48%,
+    #ffb21e 63%,
+    #ff4d4d 76%,
+    #503873
+  );
+  background-image: linear-gradient(
+    to right,
+    #73d2f6,
+    #08c 22%,
+    #7fc400 36%,
+    #ffd583 48%,
+    #ffb21e 63%,
+    #ff4d4d 76%,
+    #503873
+  );
+  transition: all 1s ease-in-out;
+}
+.product,
+.member {
+  margin-bottom: 20px;
+}
+.nav-menu img {
+  max-width: 150px;
+}
+.nav-menu span {
+  color: #ff8380;
+}
+.body-data {
+  color: #ff8380;
+}
+.body-data img {
+  max-width: 100px;
+}
+#formAdd {
+  display: none;
+}
+.nav-menuContent {
+  position: fixed;
+  background: #2c3338;
+  height: 100vh;
+}
+
+/*! Product */
+/*? Add/remove */
+#addbtn {
+  width: 200px;
+  border-radius: 12px;
+  border: none;
+  padding: 5px;
+  margin-left: 50px;
+  transition: 1s;
+  background: linear-gradient(90deg, var(--c1, #f6d365), var(--c2, #fda085) 51%, var(--c1, #f6d365)) var(--x, 0)/ 200%;
+}
+#addbtn:hover {
+  cursor: pointer;
+  --x: 100%;
+}
+#formAdd {
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+#formAdd td {
+  padding: 5px;
+}
+#formAdd input {
+  padding: 5px;
+}
+#data th,td {
+  border: 1px solid #ff8380;
+  padding: 10px;
+}
+#data input {
+  border: none;
+  border-radius: 12px;
+  padding: 5px;
+  transition: 1s;
+  background: linear-gradient(90deg, var(--c1, #f6d365), var(--c2, #fda085) 51%, var(--c1, #f6d365)) var(--x, 0)/ 200%;
+}
+#data input:hover {
+  cursor: pointer;
+  --x: 100%;
+}
+#search {
+  margin-top: 10px;
+  padding: 5px;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right bottom, #6a5af9, #f62682);
+  float: right;
+  width: 100px;
+  transition: 1s;
+}
+#search:focus {
+  width: 250px;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(to right bottom, #6a5af9, #f62682);
+  outline: none;
+}
