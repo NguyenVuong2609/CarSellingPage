@@ -115,7 +115,7 @@ body {
 
 /*! Product */
 /*? Add/remove */
-#addbtn {
+#addbtn,#savebtn {
   width: 200px;
   border-radius: 12px;
   border: none;
@@ -124,7 +124,7 @@ body {
   transition: 1s;
   background: linear-gradient(90deg, var(--c1, #f6d365), var(--c2, #fda085) 51%, var(--c1, #f6d365)) var(--x, 0)/ 200%;
 }
-#addbtn:hover {
+#addbtn:hover,#savebtn:hover {
   cursor: pointer;
   --x: 100%;
 }

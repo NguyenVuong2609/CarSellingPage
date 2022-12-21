@@ -1,9 +1,7 @@
 let count = 0;
 const phoneBtn = document.getElementById("iconPhone");
 function renderProduct() {
-  let list = "";
   let data = "";
-  let productArray = JSON.parse(localStorage.getItem("listProduct"));
   data = `
       <div class="header col-12">
             <div class="col-3" id="shop">
@@ -62,6 +60,7 @@ function renderProduct() {
 renderProduct();
 bannerShow();
 footerShow();
+
 //! Slideshow //
 function bannerShow() {
   let arraySlideShow = [
@@ -109,22 +108,25 @@ function footerShow() {
     </div>`;
   document.getElementById("footer").innerHTML = data;
 }
+
 //? Show Phone //
 let phoneNumber = document.getElementById("phoneNumber");
 phoneBtn.addEventListener("click", () => {
-  phoneNumber.style.display = (phoneNumber.style.display == "none" || phoneNumber.style.display == "") ? "block" : "none";
+  phoneNumber.style.display =
+    phoneNumber.style.display == "none" || phoneNumber.style.display == ""
+      ? "block"
+      : "none";
 });
 
 //! Show product //
-function showData(){
+function showData() {
   let listProduct = JSON.parse(localStorage.getItem("listProduct"));
-  console.log(listProduct);
   let data = "";
   for (let i = 0; i < listProduct.length; i++) {
     data += `<div class="col-4 product">
     <img src="${listProduct[i].img}" alt="" onclick="details(${listProduct[i].id})"/>
     <p>${listProduct[i].name}</p>
-    <label for="price">Price: ${listProduct[i].price}USD</label><br />
+    <label for="price">Price: ${listProduct[i].price} USD</label><br />
     <div class="actions">
       <input type="number" value="0" id="input${listProduct[i].id}" />
       <i
@@ -133,13 +135,60 @@ function showData(){
       ></i>
       <i class="fas fa-heart add-cart" onclick="addFav(${listProduct[i].id})"></i>
     </div>
-  </div>`
+  </div>`;
   }
-  document.getElementById('showData').innerHTML = data;
+  document.getElementById("showData").innerHTML = data;
 }
 showData();
 
 //! Product details //
 function details(id) {
-  
+  let open = document.getElementById("fullSrceen");
+  open.style.display = "block";
+  let listProduct = JSON.parse(localStorage.getItem("listProduct"));
+  for (let i = 0; i < listProduct.length; i++) {
+    if (listProduct[i].id == id) {
+      data = `
+      <img src="${listProduct[i].img}" alt="">
+        <p>${listProduct[i].name}</p>
+        <p>This is one of the best cars in our shop.</p>
+        <input type="button" value="X" onclick="closeDetail()" id="closeBtn">`;
+      break;
+    }
+  }
+  document.getElementById("productDetail").innerHTML = data;
 }
+
+function closeDetail() {
+  let close = document.getElementById("fullSrceen");
+  close.style.display = "none";
+}
+
+//! Search Product //
+let search = document.getElementById("search");
+search.addEventListener("change", () => {
+  let searchProduct = JSON.parse(localStorage.getItem("listProduct"));
+  let list = "";
+  for (let i = 0; i < searchProduct.length; i++) {
+    if (
+      searchProduct[i].name.toLowerCase().indexOf(search.value.toLowerCase()) !=
+        -1 ||
+      searchProduct[i].price == search.value
+    ) {
+      list += `<div class="col-4 product">
+    <img src="${searchProduct[i].img}" alt="" onclick="details(${searchProduct[i].id})"/>
+    <p>${searchProduct[i].name}</p>
+    <label for="price">Price: ${searchProduct[i].price}USD</label><br />
+    <div class="actions">
+      <input type="number" value="0" id="input${searchProduct[i].id}" />
+      <i
+        onclick="addToCart(${searchProduct[i].id})"
+        class="fa-solid fa-cart-shopping add-cart"
+      ></i>
+      <i class="fas fa-heart add-cart" onclick="addFav(${searchProduct[i].id})"></i>
+    </div>
+  </div>`;
+      document.getElementById("showData").innerHTML = list;
+    }
+  }
+});

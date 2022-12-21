@@ -96,12 +96,14 @@ function registerConfirm() {
 //! Hàm thêm thành viên//
 let getMember = localStorage.getItem("Member");
 class Member {
-  constructor(username, password, status, secret, permissions) {
+  constructor(username, password, status, secret, permissions, avatar, id) {
     this.username = username;
     this.password = password;
     this.status = status;
     this.secret = secret;
     this.permissions = permissions;
+    this.avatar = avatar;
+    this.id = id;
   }
 }
 function newMember() {
@@ -120,10 +122,11 @@ function newMember() {
         inputPassword.value,
         false,
         secretQuestion.value,
-        "actived"
+        "actived",
+        "",
+        MemberList.length + 1
       );
       MemberList.push(newMem);
-      console.log(MemberList);
       localStorage.setItem("Member", JSON.stringify(MemberList));
       alert("Đăng ký thành công.");
       window.location = "./login.html";
@@ -141,7 +144,10 @@ function newMember() {
           inputID.value,
           inputPassword.value,
           false,
-          secretQuestion.value
+          secretQuestion.value,
+          "actived",
+          "",
+          MemberList.length + 1
         );
         MemberList.push(a);
         console.log(MemberList);

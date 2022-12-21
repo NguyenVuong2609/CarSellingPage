@@ -13,64 +13,15 @@
 </head>
 <body>
     <div class="container col-12">
-        <nav class="col-3 nav-menu">
-            <div class="nav-menuContent col-3">
-                <div class="product">
-                    <h3>Product</h3>
-                    <ul>
-                        <li><input type="button" value="Add/Remove product" id="addPro" class="draw"></li>
-                        <li><input type="button" value="Edit product" id="editPro" class="draw"></li>
-                        <li><input type="button" value="Add group" class="draw"></li>
-                        <li><input type="button" value="Manage Profit" class="draw"></li>
-                    </ul>
-                </div>
-                <div class="member">
-                    <h3>Member</h3>
-                    <ul>
-                        <li><input type="button" value="Edit member" class="draw"></li>
-                        <li><input type="button" value="Manage Order" class="draw"></li>
-                        <li><input type="button" value="Banned List" class="draw"></li>
-                    </ul>
-                </div>
-                <div class="member">
-                    <h3>Information</h3>
-                    <ul>
-                        <li><input type="button" value="About" class="draw"></li>
-                        <li><input type="button" value="News" class="draw"></li>
-                    </ul>
-                </div>
-                <div id="logo">
-                    <img src="/IMG/logoshop.png" alt="">
-                    <div>Cuti<span>Shop</span></div>
-                </div>
-            </div>
-        </nav>
+        <nav class="col-3 nav-menu" id="renderMenu"></nav>
         <nav class="col-9 body-data">
             <div id="dataRender">
-                <table id="data">
-                </table>
+                <table id="data"></table>
                 <div id="formAdd">
-                    <table>
-                        <tr>
-                            <td><label for="name">Name:</label></td>
-                            <td><input type="text" placeholder="Product's name" id="inputName" required></td>
-                        </tr>
-                        <tr>
-                            <td><label for="img">Image:</label></td>
-                            <td><input type="text" placeholder="Image's url" id="inputIMG" required></td>
-                        </tr>
-                        <tr>
-                            <td><label for="price">Price:</label></td>
-                            <td><input type="number" placeholder="Price" id="inputPrice" required></td>
-                        </tr>
-                        <tr>
-                            <td><label for="group">Group:</label></td>
-                            <td><input type="text" placeholder="Group" id="inputGroup"></td>
-                        </tr>
-                    </table> 
+                    <!-- <table id="formActions"></table> 
                     <input type="button" value="ADD" id="addbtn" onclick="newProduct()"> 
                     <br>
-                    <input type="text" placeholder="Search..." id="search">
+                    <input type="text" placeholder="Search..." id="search"> -->
                 </div>
             </div>
         </nav>
