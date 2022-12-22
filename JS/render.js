@@ -297,7 +297,7 @@ search.addEventListener("change", () => {
 //! Add to cart //
 
 function addToCart(id) {
-  let flag = localStorage.getItem('Flag')
+  let flag = JSON.parse(localStorage.getItem('Flag'));
   let getMember = JSON.parse(localStorage.getItem('Member'));
   let cart = JSON.parse(localStorage.getItem('listProduct'));
   let myCart;
@@ -316,7 +316,6 @@ function addToCart(id) {
     }
     //   ? Nếu giỏ hàng đang rỗng  //
     if (myCart == "") {
-      console.log(userCart);
       listProduct = [];
       for (let i = 0; i < cart.length; i++) {
         let count = parseInt(cart[i].quantity);
@@ -334,14 +333,14 @@ function addToCart(id) {
     } else {
       // //? Nếu giỏ đã có hàng //
       let listProduct = JSON.parse(localStorage.getItem(`${userCart}`));
-      let flag = true;
+      let key = true;
       if (listProduct != null){
         for (let i = 0; i < listProduct.length; i++) {
           let quantity = parseInt(listProduct[i].quantity);
     
           //   TODO TH1: Nếu mặt hàng này đã có trong giỏ (Cộng số lượng) //
           if (id == listProduct[i].id) {
-            flag = true;
+            key = true;
             if (parseInt(document.getElementById("input" + id).value) > 0) {
               quantity += parseInt(document.getElementById("input" + id).value);
             }
@@ -352,10 +351,10 @@ function addToCart(id) {
             break;
           } else {
             // TODO TH2: Nếu mặt hàng này chưa có trong giỏ //
-            flag = false;
+            key = false;
           }
         }
-        if (flag == false) {
+        if (key == false) {
           let listProduct = JSON.parse(localStorage.getItem(`${userCart}`));
           let quantity = parseInt(cart[id].quantity);
           if (parseInt(document.getElementById("input" + id).value)>0){
@@ -366,11 +365,9 @@ function addToCart(id) {
           document.getElementById("input" + id).value = 0;
           localStorage.setItem(`${userCart}`, JSON.stringify(listProduct));
         }
-
       }
     }
   } else {
-    console.log("123");
-    alert("Please login first");
+    alert('Please login first');
   }
 }
