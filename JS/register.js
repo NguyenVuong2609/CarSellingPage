@@ -123,7 +123,7 @@ function newMember() {
         false,
         secretQuestion.value,
         "actived",
-        "",
+        "/IMG/user.png",
         MemberList.length + 1
       );
       MemberList.push(newMem);
@@ -146,7 +146,7 @@ function newMember() {
           false,
           secretQuestion.value,
           "actived",
-          "",
+          "/IMG/user.png",
           MemberList.length + 1
         );
         MemberList.push(a);

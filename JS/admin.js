@@ -272,6 +272,7 @@ editProbtn.addEventListener("click", () => {
   document.getElementById("formAdd").innerHTML = data;
   document.getElementById("formAdd").style.display = "block";
   renderEditProduct(getProduct);
+
   let savebtn = document.getElementById("savebtn");
   savebtn.addEventListener("click", () => {
     let myList = JSON.parse(localStorage.getItem("listProduct"));
@@ -297,6 +298,40 @@ editProbtn.addEventListener("click", () => {
 
     renderEditProduct(myList);
   });
+
+  let search = document.getElementById("search");
+  search.addEventListener("change", () => {
+    let searchProduct = JSON.parse(localStorage.getItem("listProduct"));
+    let list = `<tr>
+    <th>No.</th>
+    <th>Name</th>
+    <th>Picture</th>
+    <th>Price</th>
+    <th>ID</th>
+    <th>Actions</th>
+  </tr>`;
+    for (let i = 0; i < searchProduct.length; i++) {
+      if (
+        searchProduct[i].name
+          .toLowerCase()
+          .indexOf(search.value.toLowerCase()) != -1 ||
+        searchProduct[i].price == search.value
+      ) {
+        list += `<tr>
+        <td>${i + 1}</td>
+        <td>${searchProduct[i].name}</td>
+        <td><img src="${searchProduct[i].img}" alt=""></td>
+        <td>${searchProduct[i].price}USD</td>
+        <td>${searchProduct[i].id}</td>
+        <td><input type="button" value="Edit" onclick="editPro(${
+          searchProduct[i].id
+        })"></td>
+    </tr>
+        `;
+        document.getElementById("data").innerHTML = list;
+      }
+    }
+  });
 });
 function editPro(id) {
   let myList = JSON.parse(localStorage.getItem("listProduct"));
@@ -315,40 +350,6 @@ function editPro(id) {
     }
   }
 }
-
-//! Tìm kiếm //
-// let search = document.getElementById("search");
-// search.addEventListener("change", () => {
-//   let searchProduct = JSON.parse(localStorage.getItem("listProduct"));
-//   let list = `<tr>
-//   <th>No.</th>
-//   <th>Name</th>
-//   <th>Picture</th>
-//   <th>Price</th>
-//   <th>ID</th>
-//   <th>Actions</th>
-// </tr>`;
-//   for (let i = 0; i < searchProduct.length; i++) {
-//     if (
-//       searchProduct[i].name.toLowerCase().indexOf(search.value.toLowerCase()) !=
-//         -1 ||
-//       searchProduct[i].price == search.value
-//     ) {
-//       list += `<tr>
-//       <td>${i + 1}</td>
-//       <td>${searchProduct[i].name}</td>
-//       <td><img src="${searchProduct[i].img}" alt=""></td>
-//       <td>${searchProduct[i].price}USD</td>
-//       <td>${searchProduct[i].id}</td>
-//       <td><input type="button" value="Delete" onclick="deletePro(${
-//         searchProduct[i].id
-//       })"></td>
-//   </tr>
-//       `;
-//       document.getElementById("data").innerHTML = list;
-//     }
-//   }
-// });
 
 //! Edit members //
 editMembtn.addEventListener("click", () => {
@@ -392,7 +393,7 @@ function renderBanlist() {
         <td>${getMember[i].status}</td>
         <td>${getMember[i].password}</td>
         <td>${getMember[i].permissions}</td>
-        <td><input type="button" value="Ban" onclick="unbanMem(${getMember[i].id})"></td>
+        <td><input type="button" value="Unban" onclick="unbanMem(${getMember[i].id})"></td>
     </tr>
         `;
       count++;

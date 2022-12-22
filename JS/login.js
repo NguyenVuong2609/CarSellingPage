@@ -21,6 +21,8 @@ function checkAccount() {
         getMember[i].username == inputID.value &&
         getMember[i].password == inputPassword.value && getMember[i].permissions === "actived"
       ) {
+        getMember[i].status = true;
+        localStorage.setItem("Member", JSON.stringify(getMember));
         window.location = "/index.html";
         document.getElementById("signInform").onsubmit = function (e) {
           e.preventDefault();

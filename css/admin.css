@@ -144,6 +144,9 @@ body {
   border: 1px solid #ff8380;
   padding: 10px;
 }
+#data {
+  border-collapse: collapse;
+}
 #data input {
   border: none;
   border-radius: 12px;
