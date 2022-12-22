@@ -1,5 +1,6 @@
 const ipnElement = document.querySelector("#inputPassword");
 const iconElement = document.querySelector("#iconEye");
+var flag = false;
 
 iconElement.addEventListener("click", function () {
   const currentType = ipnElement.getAttribute("type");
@@ -22,6 +23,8 @@ function checkAccount() {
         getMember[i].password == inputPassword.value && getMember[i].permissions === "actived"
       ) {
         getMember[i].status = true;
+        flag = true;
+        localStorage.setItem("Flag", JSON.stringify(flag));
         localStorage.setItem("Member", JSON.stringify(getMember));
         window.location = "/index.html";
         document.getElementById("signInform").onsubmit = function (e) {
@@ -29,6 +32,7 @@ function checkAccount() {
         };
         break;
       } else {
+        localStorage.setItem("Flag", JSON.stringify(flag));
         document.getElementById("checkAcc").innerHTML =
           "Sai mật khẩu hoặc tài khoản.";
         document.getElementById("losePassword").style.display = "block";

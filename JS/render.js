@@ -1,4 +1,5 @@
-let count = 0;
+var count = 0;
+var getMembers = JSON.parse(localStorage.getItem('Member'));
 const phoneBtn = document.getElementById("iconPhone");
 function renderProduct() {
   let data = "";
@@ -177,7 +178,7 @@ function renderUserAction() {
         data = `<img src="${user[i].avatar}" alt="" id="showActions">
         <div id="userActions">
         <ul>
-        <li><input type="button" value="My profile" id="goToProfile"></li>
+        <li><input type="button" value="My profile" id="goToProfile" onclick="showProfileUser()"></li>
             <li><input type="button" value="Log out" id="logOutUser" onclick="logOutUser(${user[i].id})"></li>
           </ul>
           </div>`;
@@ -189,17 +190,79 @@ function renderUserAction() {
 }
 renderUserAction();
 
+const profileUser = document.getElementById("profileUser");
+function renderUserProfile(){
+  let user = JSON.parse(localStorage.getItem("Member"));
+  let data ="";
+  if (user != null) {
+    for (let i = 0; i < user.length; i++) {
+      if (user[i].status) {
+        
+        data = `<img src="${user[i].avatar}" alt="">
+        <div id="profileUsername">${user[i].username}</div>
+        <input type="password" value="${user[i].password}" id="profilePassword" disabled>
+        <input type="button" value="&#128072;Edit" class="editProfilePass" onclick="unlockPass()">
+        <input type="button" value="&#128076;Save" class="editProfilePass" onclick="savePass()">
+        <i id="iconEye" class="fa-regular fa-eye-slash" onclick="changeType()"></i>
+        <input type="button" value="X" id="closeProfile" onclick="closeProfile()">`;
+        break;
+      }
+    }
+  }
+  document.getElementById("profileData").innerHTML = data;
+}
+renderUserProfile()
+
+function changeType() {
+  let ipnElement = document.querySelector("#profilePassword");
+  let iconElement = document.querySelector("#iconEye");
+  const currentType = ipnElement.getAttribute("type");
+  ipnElement.setAttribute(
+    "type",
+    currentType === "password" ? "text" : "password"
+  );
+  iconElement.classList.toggle("fa-eye");
+}
+function unlockPass() {
+  let iconElement = document.getElementById("iconEye");
+  iconElement.style.display = "block";
+  document.getElementById("profilePassword").removeAttribute("disabled");
+}
+function savePass() {
+  let getMembers = JSON.parse(localStorage.getItem("Member"));
+  let profilePassword = document.getElementById("profilePassword");
+  let profileUsername = document.getElementById("profileUsername");
+  for ( i = 0 ; i < getMembers.length; i++ ) {
+    if ( getMembers[i].username == profileUsername.innerHTML) {
+      getMembers[i].password = profilePassword.value;
+      break;
+    }
+  }
+  localStorage.setItem('Member', JSON.stringify(getMembers));
+  let iconElement = document.getElementById("iconEye");
+  iconElement.style.display = "none";
+  document.getElementById("profilePassword").setAttribute("disabled","");
+}
+function closeProfile() {
+  profileUser.style.display = "none";
+}
+
 function logOutUser(id) {
   let user = JSON.parse(localStorage.getItem("Member"));
   for (let i = 0; i < user.length; i++){
     if (user[i].id == id){
       user[i].status = false;
+      let flag = false;
+      localStorage.setItem("Flag", JSON.stringify(flag));
       break;
     }
   }
   localStorage.setItem("Member",JSON.stringify(user));
   loginBtn.style.display = "block";
   renderUserAction();
+}
+function showProfileUser() {
+  profileUser.style.display = "block";
 }
 
 //! Search Product //
@@ -230,3 +293,84 @@ search.addEventListener("change", () => {
     }
   }
 });
+
+//! Add to cart //
+
+function addToCart(id) {
+  let flag = localStorage.getItem('Flag')
+  let getMember = JSON.parse(localStorage.getItem('Member'));
+  let cart = JSON.parse(localStorage.getItem('listProduct'));
+  let myCart;
+  let userCart;
+  for ( let i=0; i<getMember.length; i++) {
+    if (getMember[i].status && localStorage.getItem(`${getMember[i].username}`) == null){
+      localStorage.setItem(`${getMember[i].username}`,"");
+    }
+  }
+  if (flag) {
+    for ( let i=0; i< getMember.length; i++) {
+      if (getMember[i].status){
+        myCart = localStorage.getItem(`${getMember[i].username}`);
+        userCart = getMember[i].username;
+      }
+    }
+    //   ? Nếu giỏ hàng đang rỗng  //
+    if (myCart == "") {
+      console.log(userCart);
+      listProduct = [];
+      for (let i = 0; i < cart.length; i++) {
+        let count = parseInt(cart[i].quantity);
+        if (cart[i].id == id ) {
+          if (parseInt(document.getElementById("input" + id).value) > 0){
+            count += parseInt(document.getElementById("input" + id).value);
+            cart[i].quantity = count;
+          }
+          listProduct.push(cart[i]);
+          document.getElementById("input" + id).value = 0;
+          localStorage.setItem(`${userCart}`, JSON.stringify(listProduct));
+          break;
+        }
+      }
+    } else {
+      // //? Nếu giỏ đã có hàng //
+      let listProduct = JSON.parse(localStorage.getItem(`${userCart}`));
+      let flag = true;
+      if (listProduct != null){
+        for (let i = 0; i < listProduct.length; i++) {
+          let quantity = parseInt(listProduct[i].quantity);
+    
+          //   TODO TH1: Nếu mặt hàng này đã có trong giỏ (Cộng số lượng) //
+          if (id == listProduct[i].id) {
+            flag = true;
+            if (parseInt(document.getElementById("input" + id).value) > 0) {
+              quantity += parseInt(document.getElementById("input" + id).value);
+            }
+            listProduct[i].quantity = quantity;
+            document.getElementById("input" + id).value = 0;
+            console.log(listProduct);
+            localStorage.setItem(`${userCart}`, JSON.stringify(listProduct));
+            break;
+          } else {
+            // TODO TH2: Nếu mặt hàng này chưa có trong giỏ //
+            flag = false;
+          }
+        }
+        if (flag == false) {
+          let listProduct = JSON.parse(localStorage.getItem(`${userCart}`));
+          let quantity = parseInt(cart[id].quantity);
+          if (parseInt(document.getElementById("input" + id).value)>0){
+            quantity += parseInt(document.getElementById("input" + id).value);
+            cart[id].quantity = quantity;
+          }
+          listProduct.push(cart[id]);
+          document.getElementById("input" + id).value = 0;
+          localStorage.setItem(`${userCart}`, JSON.stringify(listProduct));
+        }
+
+      }
+    }
+  } else {
+    console.log("123");
+    alert("Please login first");
+  }
+}

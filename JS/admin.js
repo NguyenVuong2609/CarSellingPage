@@ -284,7 +284,7 @@ editProbtn.addEventListener("click", () => {
       if (myList[i].id == key) {
         myList[i].name = name.value;
         myList[i].img = img.value;
-        myList[i].price = price.value;
+        myList[i].price = parseInt(price.value);
         myList[i].group = group.value;
         key = "";
         break;
