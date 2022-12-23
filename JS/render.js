@@ -57,6 +57,26 @@ function renderProduct() {
                 </div>`;
   document.getElementById("header").innerHTML = data;
   // setInterval(bannerShow,3000);
+  let btnDelete = document.getElementById("deleteCart");
+btnDelete.addEventListener("click", () => {
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let myCart;
+  let userCart;
+  if (flag) {
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
+        myCart = JSON.parse(localStorage.getItem(`${getMember[i].username}`));
+        userCart = getMember[i].username;
+        break;
+      }
+    }
+  }
+  // localStorage.removeItem("myCart");
+  document.getElementById("tableCart").innerHTML = "";
+  document.getElementById("small").innerHTML = "";
+  document.getElementById("totalCart").innerHTML = "";
+});
 }
 renderProduct();
 bannerShow();
@@ -101,9 +121,9 @@ function footerShow() {
       <h3>Social</h3>
       <div class="soccialLink">
       <ul>
-      <li><a href="#" class="fa fa-facebook"></a></li>
-          <li><a href="#" class="fa fa-instagram"></a></li>
-          <li><a href="#" class="fa fa-youtube"></a></li>
+      <li><a href="https://www.facebook.com/" class="fa fa-facebook"></a></li>
+          <li><a href="https://www.instagram.com/" class="fa fa-instagram"></a></li>
+          <li><a href="https://www.youtube.com/" class="fa fa-youtube"></a></li>
           </ul>
       </div>
     </div>`;
