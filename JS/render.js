@@ -14,7 +14,7 @@ function renderProduct() {
   <li><a href="#">Shop</a></li>
   <li><a href="#">About</a></li>
   <li><a href="#">Services</a></li>
-  <li><a href="#">Favourite</a></li>
+  <li><a href="">Favourite</a></li>
   </ul>
             </div>
             <div class="avatar col-3">
@@ -58,25 +58,25 @@ function renderProduct() {
   document.getElementById("header").innerHTML = data;
   // setInterval(bannerShow,3000);
   let btnDelete = document.getElementById("deleteCart");
-btnDelete.addEventListener("click", () => {
-  let flag = JSON.parse(localStorage.getItem("Flag"));
-  let getMember = JSON.parse(localStorage.getItem("Member"));
-  let myCart;
-  let userCart;
-  if (flag) {
-    for (let i = 0; i < getMember.length; i++) {
-      if (getMember[i].status) {
-        myCart = JSON.parse(localStorage.getItem(`${getMember[i].username}`));
-        userCart = getMember[i].username;
-        break;
+  btnDelete.addEventListener("click", () => {
+    let flag = JSON.parse(localStorage.getItem("Flag"));
+    let getMember = JSON.parse(localStorage.getItem("Member"));
+    let myCart;
+    let userCart;
+    if (flag) {
+      for (let i = 0; i < getMember.length; i++) {
+        if (getMember[i].status) {
+          myCart = JSON.parse(localStorage.getItem(`${getMember[i].username}`));
+          userCart = getMember[i].username;
+          break;
+        }
       }
     }
-  }
-  // localStorage.removeItem("myCart");
-  document.getElementById("tableCart").innerHTML = "";
-  document.getElementById("small").innerHTML = "";
-  document.getElementById("totalCart").innerHTML = "";
-});
+    localStorage.removeItem(`${userCart}`);
+    document.getElementById("tableCart").innerHTML = "";
+    document.getElementById("small").innerHTML = "";
+    document.getElementById("totalCart").innerHTML = "";
+  });
 }
 renderProduct();
 bannerShow();
@@ -480,7 +480,7 @@ function changeValue(id) {
     }
     for (i = 0; i < myCart.length; i++) {
       if (myCart[i].id == id) {
-        if (editQuantity.value >= 0){
+        if (editQuantity.value >= 0) {
           myCart[i].quantity = editQuantity.value;
           break;
         }
@@ -519,5 +519,76 @@ function totalCart() {
     document.getElementById("small").innerHTML = sum;
     document.getElementById("totalCart").innerHTML =
       "Total product: " + sum + "&nbsp&nbsp Total money: " + total + "&nbspUSD";
+  }
+}
+
+//! Favourite product //
+function addFav(id) {
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let cart = JSON.parse(localStorage.getItem("listProduct"));
+  let myFavourite;
+  let userCartFav;
+  for (let i = 0; i < getMember.length; i++) {
+    if (
+      getMember[i].status &&
+      localStorage.getItem(`fav${getMember[i].username}`) == null
+    ) {
+      localStorage.setItem(`fav${getMember[i].username}`, "");
+    }
+  }
+  if (flag) {
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
+        myFavourite = localStorage.getItem(`fav${getMember[i].username}`);
+        userCartFav = getMember[i].username;
+        break;
+      }
+    }
+    //   ? Nếu danh sách đang rỗng  //
+    if (myFavourite == "") {
+      listProductFav = [];
+      for (let i = 0; i < cart.length; i++) {
+        if (cart[i].id == id) {
+          listProductFav.push(cart[i]);
+          localStorage.setItem(
+            `fav${userCartFav}`,
+            JSON.stringify(listProductFav)
+          );
+          break;
+        }
+      }
+    } else {
+      // //? Nếu danh sách đã có hàng //
+      let listProductFav = JSON.parse(
+        localStorage.getItem(`fav${userCartFav}`)
+      );
+      let key = true;
+      if (listProductFav != null) {
+        for (let i = 0; i < listProductFav.length; i++) {
+          //   TODO TH1: Nếu mặt hàng này đã có trong giỏ thì không thêm //
+          if (id == listProductFav[i].id) {
+            key = true;
+            alert("This product has already been added.");
+            break;
+          } else {
+            //   TODO TH2: Nếu mặt hàng này chưa có trong giỏ thì thêm //
+            key = false;
+            break;
+          }
+        }
+        if (key == false) {
+          let listProductFav = JSON.parse(
+            localStorage.getItem(`fav${userCartFav}`)
+          );
+          listProductFav.push(cart[id]);
+          console.log(listProductFav);
+          localStorage.setItem(
+            `fav${userCartFav}`,
+            JSON.stringify(listProductFav)
+          );
+        }
+      }
+    }
   }
 }
