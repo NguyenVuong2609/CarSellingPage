@@ -1,5 +1,5 @@
 var count = 0;
-var getMembers = JSON.parse(localStorage.getItem('Member'));
+var getMembers = JSON.parse(localStorage.getItem("Member"));
 const phoneBtn = document.getElementById("iconPhone");
 function renderProduct() {
   let data = "";
@@ -61,7 +61,6 @@ function renderProduct() {
 renderProduct();
 bannerShow();
 footerShow();
-
 
 //! Slideshow //
 function bannerShow() {
@@ -191,13 +190,12 @@ function renderUserAction() {
 renderUserAction();
 
 const profileUser = document.getElementById("profileUser");
-function renderUserProfile(){
+function renderUserProfile() {
   let user = JSON.parse(localStorage.getItem("Member"));
-  let data ="";
+  let data = "";
   if (user != null) {
     for (let i = 0; i < user.length; i++) {
       if (user[i].status) {
-        
         data = `<img src="${user[i].avatar}" alt="">
         <div id="profileUsername">${user[i].username}</div>
         <input type="password" value="${user[i].password}" id="profilePassword" disabled>
@@ -211,7 +209,7 @@ function renderUserProfile(){
   }
   document.getElementById("profileData").innerHTML = data;
 }
-renderUserProfile()
+renderUserProfile();
 
 function changeType() {
   let ipnElement = document.querySelector("#profilePassword");
@@ -232,16 +230,16 @@ function savePass() {
   let getMembers = JSON.parse(localStorage.getItem("Member"));
   let profilePassword = document.getElementById("profilePassword");
   let profileUsername = document.getElementById("profileUsername");
-  for ( i = 0 ; i < getMembers.length; i++ ) {
-    if ( getMembers[i].username == profileUsername.innerHTML) {
+  for (i = 0; i < getMembers.length; i++) {
+    if (getMembers[i].username == profileUsername.innerHTML) {
       getMembers[i].password = profilePassword.value;
       break;
     }
   }
-  localStorage.setItem('Member', JSON.stringify(getMembers));
+  localStorage.setItem("Member", JSON.stringify(getMembers));
   let iconElement = document.getElementById("iconEye");
   iconElement.style.display = "none";
-  document.getElementById("profilePassword").setAttribute("disabled","");
+  document.getElementById("profilePassword").setAttribute("disabled", "");
 }
 function closeProfile() {
   profileUser.style.display = "none";
@@ -249,15 +247,15 @@ function closeProfile() {
 
 function logOutUser(id) {
   let user = JSON.parse(localStorage.getItem("Member"));
-  for (let i = 0; i < user.length; i++){
-    if (user[i].id == id){
+  for (let i = 0; i < user.length; i++) {
+    if (user[i].id == id) {
       user[i].status = false;
       let flag = false;
       localStorage.setItem("Flag", JSON.stringify(flag));
       break;
     }
   }
-  localStorage.setItem("Member",JSON.stringify(user));
+  localStorage.setItem("Member", JSON.stringify(user));
   loginBtn.style.display = "block";
   renderUserAction();
 }
@@ -297,21 +295,25 @@ search.addEventListener("change", () => {
 //! Add to cart //
 
 function addToCart(id) {
-  let flag = JSON.parse(localStorage.getItem('Flag'));
-  let getMember = JSON.parse(localStorage.getItem('Member'));
-  let cart = JSON.parse(localStorage.getItem('listProduct'));
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let cart = JSON.parse(localStorage.getItem("listProduct"));
   let myCart;
   let userCart;
-  for ( let i=0; i<getMember.length; i++) {
-    if (getMember[i].status && localStorage.getItem(`${getMember[i].username}`) == null){
-      localStorage.setItem(`${getMember[i].username}`,"");
+  for (let i = 0; i < getMember.length; i++) {
+    if (
+      getMember[i].status &&
+      localStorage.getItem(`${getMember[i].username}`) == null
+    ) {
+      localStorage.setItem(`${getMember[i].username}`, "");
     }
   }
   if (flag) {
-    for ( let i=0; i< getMember.length; i++) {
-      if (getMember[i].status){
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
         myCart = localStorage.getItem(`${getMember[i].username}`);
         userCart = getMember[i].username;
+        break;
       }
     }
     //   ? Nếu giỏ hàng đang rỗng  //
@@ -319,8 +321,8 @@ function addToCart(id) {
       listProduct = [];
       for (let i = 0; i < cart.length; i++) {
         let count = parseInt(cart[i].quantity);
-        if (cart[i].id == id ) {
-          if (parseInt(document.getElementById("input" + id).value) > 0){
+        if (cart[i].id == id) {
+          if (parseInt(document.getElementById("input" + id).value) > 0) {
             count += parseInt(document.getElementById("input" + id).value);
             cart[i].quantity = count;
           }
@@ -334,10 +336,10 @@ function addToCart(id) {
       // //? Nếu giỏ đã có hàng //
       let listProduct = JSON.parse(localStorage.getItem(`${userCart}`));
       let key = true;
-      if (listProduct != null){
+      if (listProduct != null) {
         for (let i = 0; i < listProduct.length; i++) {
           let quantity = parseInt(listProduct[i].quantity);
-    
+
           //   TODO TH1: Nếu mặt hàng này đã có trong giỏ (Cộng số lượng) //
           if (id == listProduct[i].id) {
             key = true;
@@ -357,7 +359,7 @@ function addToCart(id) {
         if (key == false) {
           let listProduct = JSON.parse(localStorage.getItem(`${userCart}`));
           let quantity = parseInt(cart[id].quantity);
-          if (parseInt(document.getElementById("input" + id).value)>0){
+          if (parseInt(document.getElementById("input" + id).value) > 0) {
             quantity += parseInt(document.getElementById("input" + id).value);
             cart[id].quantity = quantity;
           }
@@ -367,7 +369,135 @@ function addToCart(id) {
         }
       }
     }
+    showCart();
+    totalCart();
   } else {
-    alert('Please login first');
+    alert("Please login first");
+  }
+}
+
+//! Show Cart //
+//? Hide - Show //
+let btnCart = document.getElementById("cart-button");
+btnCart.addEventListener("click", () => {
+  let visible = document.getElementById("cart-menu");
+  let cart = localStorage.getItem("myCart");
+  if (visible.style.visibility == "") {
+    visible.style.visibility = "visible";
+  } else {
+    visible.style.visibility =
+      visible.style.visibility == "hidden" ? "visible" : "hidden";
+  }
+  if (cart != "") {
+  }
+  showCart();
+  totalCart();
+});
+
+function showCart() {
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let myCart;
+  let userCart;
+  let showCart = document.getElementById("show-cart");
+  if (flag) {
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
+        myCart = JSON.parse(localStorage.getItem(`${getMember[i].username}`));
+        userCart = getMember[i].username;
+        break;
+      }
+    }
+    let dataProduct = `<tr>
+    <td>Num</td>
+    <td>Picture</td>
+    <td>Name</td>
+    <td>Price</td>
+    <td>Quantity</td>
+    <td>Total Money</td>
+    </tr>
+    `;
+    for (let i = 0; i < myCart.length; i++) {
+      dataProduct += `
+      <tr>
+      <td>${i + 1}</td>
+      <td><img src="${myCart[i].img}" alt=""></td>
+      <td>${myCart[i].name}</td>
+      <td>${myCart[i].price}USD</td>
+      <td>
+      <input type="number" value="${myCart[i].quantity}" id="editQuantity${
+        myCart[i].id
+      }" disabled>
+      <input type="button" value="&#9997;" onclick="changeValue(${
+        myCart[i].id
+      })" id="pencilEdit">
+      </td>
+      <td>${myCart[i].quantity * myCart[i].price} USD</td>
+      </tr>
+      `;
+    }
+    document.getElementById("tableCart").innerHTML = dataProduct;
+    if (myCart.length > 4) {
+      showCart.style.overflow = "auto";
+      showCart.style.height = "350px";
+    }
+  }
+}
+
+function changeValue(id) {
+  let editQuantity = document.getElementById(`editQuantity${id}`);
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let myCart;
+  let userCart;
+  if (flag) {
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
+        myCart = JSON.parse(localStorage.getItem(`${getMember[i].username}`));
+        userCart = getMember[i].username;
+        break;
+      }
+    }
+    for (i = 0; i < myCart.length; i++) {
+      if (myCart[i].id == id) {
+        if (editQuantity.value >= 0){
+          myCart[i].quantity = editQuantity.value;
+          break;
+        }
+      }
+    }
+    localStorage.setItem(`${userCart}`, JSON.stringify(myCart));
+    console.log(editQuantity.getAttribute("disabled"));
+    if (editQuantity.getAttribute("disabled") == null) {
+      showCart();
+      totalCart();
+    }
+  }
+  editQuantity.toggleAttribute("disabled");
+}
+
+//? Total cart //
+function totalCart() {
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let myCart;
+  let userCart;
+  let sum = 0;
+  let total = 0;
+  if (flag) {
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
+        myCart = JSON.parse(localStorage.getItem(`${getMember[i].username}`));
+        userCart = getMember[i].username;
+        break;
+      }
+    }
+    for (let i = 0; i < myCart.length; i++) {
+      sum += parseInt(myCart[i].quantity);
+      total += parseInt(myCart[i].quantity * myCart[i].price);
+    }
+    document.getElementById("small").innerHTML = sum;
+    document.getElementById("totalCart").innerHTML =
+      "Total product: " + sum + "&nbsp&nbsp Total money: " + total + "&nbspUSD";
   }
 }
