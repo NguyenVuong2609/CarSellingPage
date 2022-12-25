@@ -87,15 +87,19 @@ body {
   margin-left: -5px;
   text-align: center;
 }
-.menu a {
+.menu input {
   text-decoration: none;
   color: #777777;
-  display: block;
+  padding: 10px;
+  border: none;
+  background-color: white;
+  font-size: 20px;
 }
-.menu a:hover {
+.menu input:hover {
   background: #2c3338;
   color: white;
   border-radius: 8px;
+  cursor: pointer;
 }
 .avatar {
   display: flex;
@@ -230,7 +234,7 @@ td {
 #phoneInfo {
   position: fixed;
   bottom: 60px;
-  left: 60px;
+  right: 60px;
   z-index: 10;
   display: flex;
   align-items: center;
@@ -533,7 +537,7 @@ td {
     )
     var(--x, 0) / 200%;
 }
-.editProfilePass:hover {
+.editProfilePass:hover, #fav-list input:hover {
   cursor: pointer;
   --x: 100%;
 }
@@ -559,6 +563,42 @@ td {
   border: 1px solid white;
 }
 
+/** Favourite product **/
+#fav-list img {
+   max-width: 100px;
+}
+#fav-list input {
+  text-align: center;
+  border: none;
+  padding: 6px;
+  border-radius: 8px;
+  transition: 1s;
+  background: linear-gradient(
+      90deg,
+      var(--c1, #f0094a),
+      var(--c2, #fda085) 51%,
+      var(--c1, #f0094a)
+    )
+    var(--x, 0) / 200%;
+}
+
+
+@media only screen and (max-width: 820px) {
+  .product {
+    width: 50%;
+  }
+  .menu {
+    width: 50%;
+    font-size: 10px;
+  }
+  .avatar {
+    font-size: 15px;
+    width: 30%;
+  }
+  #shop {
+    width: 20%;
+  }
+}
 @media only screen and (max-width: 600px) {
   .footer {
     font-size: 12px;
@@ -571,12 +611,12 @@ td {
   }
   #shop {
     width: 20%;
-    margin-right: 55px;
+    margin-right: 20%;
     font-size: 15px;
   }
   #login-button {
     font-size: 10px;
-    width: 35px;
+    width: 100%;
     display: block;
   }
   .footer-link a {
@@ -597,14 +637,7 @@ td {
   .product {
     width: 100%;
   }
-  #phoneInfo {
-    position: fixed;
-    bottom: 60px;
-    right: 5px;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-  }
+
   #search:focus {
     width: 100px;
     border-bottom: 2px solid #2c3338;
@@ -623,4 +656,13 @@ td {
     top: 77%;
     left: 65%;
   }
+  #userInfo img {
+    max-width: 50px;
+  }
+  #userActions input {
+    font-size: 10px;
+  }
+  #fav-list img {
+    max-width: 100px;
+ }
 }

@@ -31,13 +31,20 @@ addProMenubtn.addEventListener("click", () => {
 <tr>
   <td><label for="group">Group:</label></td>
   <td><input type="text" placeholder="Group" id="inputGroup"></td>
-</tr></table> 
+</tr>
+<tr>
+  <td><label for="file">Image file</label></td>
+  <td><input type="file" accept=".jpg, .png" id="inputFile" onclick="readURL(this)">
+  <button onclick="saveIMGUrl()">Save</button></td>
+</tr>
+</table> 
   <input type="button" value="ADD" id="addbtn" onclick="newProduct()"> 
   <br>
   <input type="text" placeholder="Search..." id="search">`;
   document.getElementById("formAdd").innerHTML = data;
   document.getElementById("formAdd").style.display = "block";
-
+  
+  
   //! Tìm kiếm //
   let search = document.getElementById("search");
   search.addEventListener("change", () => {
@@ -75,7 +82,24 @@ addProMenubtn.addEventListener("click", () => {
 
   renderProduct(getProduct);
 });
-
+//! File IMG url //
+function readURL(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          localStorage.setItem("image",e.target.result)
+      }
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+function saveIMGUrl(){
+  let imgUrl =localStorage.getItem("image");
+  let inputIMG = document.getElementById("inputIMG");
+  let inputFile = document.getElementById("inputFile");
+  inputIMG.value = imgUrl;
+  inputFile.value = "";
+  localStorage.removeItem("image");
+}
 //! Render Product Add/remove//
 function renderProduct(product) {
   let data = `<tr>

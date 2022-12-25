@@ -11,10 +11,10 @@ function renderProduct() {
   </div>
   <div class="menu col-6">
   <ul class="ul-center">
-  <li><a href="#">Shop</a></li>
-  <li><a href="#">About</a></li>
-  <li><a href="#">Services</a></li>
-  <li><a href="">Favourite</a></li>
+  <li><input type="button" value="Shop"></li>
+  <li><input type="button" value="About"></li>
+  <li><input type="button" value="Services"></li>
+  <li><input type="button" value="Favourite" onclick="showFavList()"></li>
   </ul>
             </div>
             <div class="avatar col-3">
@@ -183,6 +183,7 @@ function details(id) {
 function closeDetail() {
   let close = document.getElementById("fullSrceen");
   close.style.display = "none";
+  document.getElementById("productDetail").innerHTML = `<table id="fav-list"></table>`
 }
 
 //! User Actions //
@@ -198,6 +199,7 @@ function renderUserAction() {
         <div id="userActions">
         <ul>
         <li><input type="button" value="My profile" id="goToProfile" onclick="showProfileUser()"></li>
+        <li><input type="button" value="My favorites" id="goToFavorites" onclick="showFavList()"></li>
             <li><input type="button" value="Log out" id="logOutUser" onclick="logOutUser(${user[i].id})"></li>
           </ul>
           </div>`;
@@ -459,7 +461,9 @@ function showCart() {
     document.getElementById("tableCart").innerHTML = dataProduct;
     if (myCart.length > 4) {
       showCart.style.overflow = "auto";
-      showCart.style.height = "350px";
+      showCart.style.height = "40vh";
+    } else {
+      showCart.style.height = "auto";
     }
   }
 }
@@ -590,5 +594,77 @@ function addFav(id) {
         }
       }
     }
+  } else {
+    alert('Please login and try again.');
   }
+}
+
+function showFavList() {
+  let open = document.getElementById("fullSrceen");
+  let flag = JSON.parse(localStorage.getItem("Flag"));
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let myFavourite;
+  let userCartFav;
+  let productDetail = document.getElementById("productDetail");
+  let data = `<input type="button" value="X" onclick="closeDetail()" id="closeBtn">
+  <tr>
+  <th>Name</th>
+  <th>Picture</th>
+  <th>Price</th>
+  <th>Actions</th>
+</tr>`;
+  open.style.display = "block";
+  if (flag) {
+    for (let i = 0; i < getMember.length; i++) {
+      if (getMember[i].status) {
+        myFavourite = JSON.parse(
+          localStorage.getItem(`fav${getMember[i].username}`)
+        );
+        userCartFav = getMember[i].username;
+        break;
+      }
+    }
+    if (myFavourite != null) {
+      for (j = 0; j < myFavourite.length; j++) {
+        data += `<tr>
+        <td>${myFavourite[j].name}</td>
+        <td><img src="${myFavourite[j].img}" alt=""></td>
+        <td>${myFavourite[j].price} USD</td>
+        <td><input type="button" value="Unlike" onclick="deleteFavItem(${myFavourite[j].id})"></td>
+      </tr>`;
+      }
+      if (myFavourite.length > 4) {
+        productDetail.style.overflow = "auto";
+        productDetail.style.height = "40vh";
+      } else {
+        productDetail.style.height = "auto";
+      }
+    }
+  }
+  document.getElementById("fav-list").innerHTML = data;
+}
+function deleteFavItem(id) {
+  let getMember = JSON.parse(localStorage.getItem("Member"));
+  let myFavourite;
+  let userCartFav;
+  for (let i = 0; i < getMember.length; i++) {
+    if (getMember[i].status) {
+      myFavourite = JSON.parse(localStorage.getItem(`fav${getMember[i].username}`));
+      userCartFav = getMember[i].username;
+      break;
+    }
+  }
+  if (myFavourite.length > 1) {
+    for (let i = 0; i < myFavourite.length; i++) {
+      if (myFavourite[i].id == id) {
+        myFavourite.splice(i, 1);
+        localStorage.setItem(`fav${userCartFav}`,JSON.stringify(myFavourite));
+        break;
+      }
+    }
+  } else {
+    localStorage.removeItem(`fav${userCartFav}`);
+    document.getElementById("fav-list").innerHTML = "";
+  }
+  showFavList();
 }
