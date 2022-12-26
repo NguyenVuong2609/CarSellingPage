@@ -1,3 +1,37 @@
+function renderMenuBar() {
+  data = `<div class="nav-menuContent col-3">
+  <div class="product">
+      <h3>Product</h3>
+      <ul>
+          <li><input type="button" value="Add/Remove product" id="addPro" class="draw"></li>
+          <li><input type="button" value="Edit product" id="editPro" class="draw"></li>
+          <li><input type="button" value="Add group" class="draw"></li>
+          <li><input type="button" value="Manage Profit" class="draw"></li>
+      </ul>
+  </div>
+  <div class="member">
+      <h3>Member</h3>
+      <ul>
+          <li><input type="button" value="Edit member" class="draw" id="editMem"></li>
+          <li><input type="button" value="Manage Order" class="draw" id="manageOrder"></li>
+          <li><input type="button" value="Banned List" class="draw" id="showBanlist"></li>
+      </ul>
+  </div>
+  <div class="member">
+      <h3>Information</h3>
+      <ul>
+          <li><input type="button" value="About" class="draw"></li>
+          <li><input type="button" value="News" class="draw"></li>
+      </ul>
+  </div>
+  <div id="logo">
+      <img src="/IMG/logoshop.png" alt="">
+      <div>Cuti<span>Shop</span></div>
+      <input type="button" value="Logout" id="logout">
+  </div>
+</div>`;
+  document.getElementById("renderMenu").innerHTML = data;
+}
 renderMenuBar();
 var getProduct = JSON.parse(localStorage.getItem("listProduct"));
 var getMember = JSON.parse(localStorage.getItem("Member"));
@@ -8,14 +42,10 @@ const addbtnNew = document.getElementById("addbtn");
 const editMembtn = document.getElementById("editMem");
 const showBanlistbtn = document.getElementById("showBanlist");
 const manageOrderbtn = document.getElementById("manageOrder");
-let adminAcc = [
-  {
-    username: "admin",
-    password: "admin",
-  },
-];
-localStorage.setItem("admin", JSON.stringify(adminAcc));
+const logoutbtn = document.getElementById("logout");
 
+var adminPermission = JSON.parse(localStorage.getItem("admin"));
+if (adminPermission[0].status === "online"){
 addProMenubtn.addEventListener("click", () => {
   let getProduct = JSON.parse(localStorage.getItem("listProduct"));
   data = `<table id="formActions"><td><label for="name">Name:</label></td>
@@ -223,39 +253,6 @@ function renderOrder(pending) {
 }
 
 //? Render Menu bar //
-function renderMenuBar() {
-  data = `<div class="nav-menuContent col-3">
-  <div class="product">
-      <h3>Product</h3>
-      <ul>
-          <li><input type="button" value="Add/Remove product" id="addPro" class="draw"></li>
-          <li><input type="button" value="Edit product" id="editPro" class="draw"></li>
-          <li><input type="button" value="Add group" class="draw"></li>
-          <li><input type="button" value="Manage Profit" class="draw"></li>
-      </ul>
-  </div>
-  <div class="member">
-      <h3>Member</h3>
-      <ul>
-          <li><input type="button" value="Edit member" class="draw" id="editMem"></li>
-          <li><input type="button" value="Manage Order" class="draw" id="manageOrder"></li>
-          <li><input type="button" value="Banned List" class="draw" id="showBanlist"></li>
-      </ul>
-  </div>
-  <div class="member">
-      <h3>Information</h3>
-      <ul>
-          <li><input type="button" value="About" class="draw"></li>
-          <li><input type="button" value="News" class="draw"></li>
-      </ul>
-  </div>
-  <div id="logo">
-      <img src="/IMG/logoshop.png" alt="">
-      <div>Cuti<span>Shop</span></div>
-  </div>
-</div>`;
-  document.getElementById("renderMenu").innerHTML = data;
-}
 
 //! Thêm sản phẩm lên local //
 function newProduct() {
@@ -499,9 +496,19 @@ function unbanMem(id) {
   renderBanlist();
 }
 
-//! Manage orger //
+//! Manage order //
 manageOrderbtn.addEventListener("click", () => {
   document.getElementById("formAdd").style.display = "none";
   let pending = JSON.parse(localStorage.getItem("pending"));
   renderOrder(pending);
 });
+
+}
+//! Logout Admin //
+logoutbtn.addEventListener('click', ()=> {
+  adminPermission[0].status == "offline";
+  document.getElementById("formAdd").style.display = "none";
+  document.getElementById("data").innerHTML = "";
+  localStorage.setItem('admin',adminPermission);
+  window.location = "/Pages/login.html"
+})
