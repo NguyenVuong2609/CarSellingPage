@@ -175,3 +175,9 @@ body {
   border-image-source: linear-gradient(to right bottom, #6a5af9, #f62682);
   outline: none;
 }
+#inputDetails {
+  resize: none;
+}
+#detailsProduct {
+  max-width: 200px;
+}

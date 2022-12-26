@@ -195,11 +195,9 @@ td {
 }
 #tableCart input {
   width: 35px;
-  /* color: white; */
   text-align: center;
 }
 #pencilEdit {
-  /* width: 5px; */
   font-size: 15px;
   background-color: #fda085;
 }
@@ -453,6 +451,9 @@ td {
   cursor: pointer;
   --x: 100%;
 }
+#details-product {
+  max-width: 450px;
+}
 
 /*! User */
 #userInfo {
@@ -646,6 +647,9 @@ td {
     left: 5%;
   }
   #productDetail img {
+    max-width: 400px;
+  }
+  #details-product {
     max-width: 400px;
   }
   .profileUser {

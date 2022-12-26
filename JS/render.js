@@ -72,10 +72,16 @@ function renderProduct() {
         }
       }
     }
+
     localStorage.removeItem(`${userCart}`);
     document.getElementById("tableCart").innerHTML = "";
     document.getElementById("small").innerHTML = "";
     document.getElementById("totalCart").innerHTML = "";
+  });
+
+  let btnPay = document.getElementById("pay-money");
+  btnPay.addEventListener("click", () => {
+    window.location = "/Pages/payment.html";
   });
 }
 renderProduct();
@@ -172,7 +178,7 @@ function details(id) {
       data = `
       <img src="${listProduct[i].img}" alt="">
       <p>${listProduct[i].name}</p>
-      <p>This is one of the best cars in our shop.</p>
+      <p id="details-product">${listProduct[i].details}</p>
       <input type="button" value="X" onclick="closeDetail()" id="closeBtn">`;
       break;
     }
@@ -183,7 +189,9 @@ function details(id) {
 function closeDetail() {
   let close = document.getElementById("fullSrceen");
   close.style.display = "none";
-  document.getElementById("productDetail").innerHTML = `<table id="fav-list"></table>`
+  document.getElementById(
+    "productDetail"
+  ).innerHTML = `<table id="fav-list"></table>`;
 }
 
 //! User Actions //
@@ -370,7 +378,6 @@ function addToCart(id) {
             }
             listProduct[i].quantity = quantity;
             document.getElementById("input" + id).value = 0;
-            console.log(listProduct);
             localStorage.setItem(`${userCart}`, JSON.stringify(listProduct));
             break;
           } else {
@@ -595,7 +602,7 @@ function addFav(id) {
       }
     }
   } else {
-    alert('Please login and try again.');
+    alert("Please login and try again.");
   }
 }
 
@@ -649,7 +656,9 @@ function deleteFavItem(id) {
   let userCartFav;
   for (let i = 0; i < getMember.length; i++) {
     if (getMember[i].status) {
-      myFavourite = JSON.parse(localStorage.getItem(`fav${getMember[i].username}`));
+      myFavourite = JSON.parse(
+        localStorage.getItem(`fav${getMember[i].username}`)
+      );
       userCartFav = getMember[i].username;
       break;
     }
@@ -658,7 +667,7 @@ function deleteFavItem(id) {
     for (let i = 0; i < myFavourite.length; i++) {
       if (myFavourite[i].id == id) {
         myFavourite.splice(i, 1);
-        localStorage.setItem(`fav${userCartFav}`,JSON.stringify(myFavourite));
+        localStorage.setItem(`fav${userCartFav}`, JSON.stringify(myFavourite));
         break;
       }
     }

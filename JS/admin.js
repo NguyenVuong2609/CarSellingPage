@@ -29,12 +29,17 @@ addProMenubtn.addEventListener("click", () => {
   <td><input type="number" placeholder="Price" id="inputPrice" required></td>
 </tr>
 <tr>
+  <td><label for="Description">Description:</label></td>
+  <td><textarea name="" id="inputDetails" cols="40" rows="10" placeholder="Description"></textarea>
+  </td>
+</tr>
+<tr>
   <td><label for="group">Group:</label></td>
   <td><input type="text" placeholder="Group" id="inputGroup"></td>
 </tr>
 <tr>
   <td><label for="file">Image file</label></td>
-  <td><input type="file" accept=".jpg, .png" id="inputFile" onclick="readURL(this)">
+  <td><input type="file" accept=".jpg, .png" id="inputFile" onchange="readURL(this)">
   <button onclick="saveIMGUrl()">Save</button></td>
 </tr>
 </table> 
@@ -43,7 +48,6 @@ addProMenubtn.addEventListener("click", () => {
   <input type="text" placeholder="Search..." id="search">`;
   document.getElementById("formAdd").innerHTML = data;
   document.getElementById("formAdd").style.display = "block";
-  
   
   //! Tìm kiếm //
   let search = document.getElementById("search");
@@ -83,6 +87,7 @@ addProMenubtn.addEventListener("click", () => {
   renderProduct(getProduct);
 });
 //! File IMG url //
+let flag;
 function readURL(input) {
   if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -91,13 +96,15 @@ function readURL(input) {
       }
       reader.readAsDataURL(input.files[0]);
   }
+  flag = input;
 }
 function saveIMGUrl(){
-  let imgUrl =localStorage.getItem("image");
+  let imgUrl = localStorage.getItem("image");
   let inputIMG = document.getElementById("inputIMG");
   let inputFile = document.getElementById("inputFile");
   inputIMG.value = imgUrl;
   inputFile.value = "";
+  flag ="";
   localStorage.removeItem("image");
 }
 //! Render Product Add/remove//
@@ -107,6 +114,7 @@ function renderProduct(product) {
     <th>Name</th>
     <th>Picture</th>
     <th>Price</th>
+    <th>Description</th>
     <th>ID</th>
     <th>Actions</th>
 </tr>`;
@@ -116,6 +124,7 @@ function renderProduct(product) {
         <td>${product[i].name}</td>
         <td><img src="${product[i].img}" alt=""></td>
         <td>${product[i].price}USD</td>
+        <td id="detailsProduct">${product[i].details}</td>
         <td>${product[i].id}</td>
         <td><input type="button" value="Delete" onclick="deletePro(${
           product[i].id
@@ -133,6 +142,7 @@ function renderEditProduct(product) {
     <th>Name</th>
     <th>Picture</th>
     <th>Price</th>
+    <th>Description</th>
     <th>ID</th>
     <th>Actions</th>
 </tr>`;
@@ -142,6 +152,7 @@ function renderEditProduct(product) {
         <td>${product[i].name}</td>
         <td><img src="${product[i].img}" alt=""></td>
         <td>${product[i].price}USD</td>
+        <td id="detailsProduct">${product[i].details}</td>
         <td>${product[i].id}</td>
         <td><input type="button" value="Edit" onclick="editPro(${
           product[i].id
@@ -222,6 +233,7 @@ function newProduct() {
   let img = document.getElementById("inputIMG");
   let price = document.getElementById("inputPrice");
   let group = document.getElementById("inputGroup");
+  let details = document.getElementById("inputDetails");
   if (getProduct == null) {
     getProduct = [];
     if (name.value != "" && price.value != "" && img.value != "") {
@@ -232,6 +244,7 @@ function newProduct() {
         id: getProduct.length,
         group: group.value,
         quantity: 0,
+        details: details.value
       });
     }
   } else {
@@ -243,6 +256,7 @@ function newProduct() {
         id: getProduct.length,
         group: group.value,
         quantity: 0,
+        details: details.value
       });
     }
   }
@@ -251,6 +265,7 @@ function newProduct() {
   document.getElementById("inputIMG").value = "";
   document.getElementById("inputPrice").value = "";
   document.getElementById("inputGroup").value = "";
+  document.getElementById("inputDetails").value = "";
   renderProduct(getProduct);
 }
 
@@ -287,9 +302,20 @@ editProbtn.addEventListener("click", () => {
   <td><input type="number" placeholder="Price" id="inputPrice" required></td>
   </tr>
 <tr>
+<tr>
+  <td><label for="Description">Description:</label></td>
+  <td><textarea name="" id="inputDetails" cols="40" rows="10" placeholder="Description"></textarea>
+  </td>
+</tr>
   <td><label for="group">Group:</label></td>
   <td><input type="text" placeholder="Group" id="inputGroup"></td>
-</tr></table> 
+</tr>
+<tr>
+  <td><label for="file">Image file</label></td>
+  <td><input type="file" accept=".jpg, .png" id="inputFile" onchange="readURL(this)">
+  <button onclick="saveIMGUrl()">Save</button></td>
+</tr>
+</table> 
 <input type="button" value="Save" id="savebtn"> 
 <br>
 <input type="text" placeholder="Search..." id="search">`;
@@ -304,12 +330,14 @@ editProbtn.addEventListener("click", () => {
     let img = document.getElementById("inputIMG");
     let price = document.getElementById("inputPrice");
     let group = document.getElementById("inputGroup");
+    let details = document.getElementById("inputDetails");
     for (let i = 0; i < myList.length; i++) {
       if (myList[i].id == key) {
         myList[i].name = name.value;
         myList[i].img = img.value;
         myList[i].price = parseInt(price.value);
         myList[i].group = group.value;
+        myList[i].details = details.value;
         key = "";
         break;
       }
@@ -318,6 +346,7 @@ editProbtn.addEventListener("click", () => {
     document.getElementById("inputIMG").value = "";
     document.getElementById("inputPrice").value = "";
     document.getElementById("inputGroup").value = "";
+    document.getElementById("inputDetails").value = "";
     localStorage.setItem("listProduct", JSON.stringify(myList));
 
     renderEditProduct(myList);
@@ -363,12 +392,14 @@ function editPro(id) {
   let img = document.getElementById("inputIMG");
   let price = document.getElementById("inputPrice");
   let group = document.getElementById("inputGroup");
+  let details = document.getElementById("inputDetails")
   for (let i = 0; i < myList.length; i++) {
     if (myList[i].id == id) {
       name.value = myList[i].name;
       img.value = myList[i].img;
       price.value = myList[i].price;
       group.value = myList[i].group;
+      details.value = myList[i].details;
       key = myList[i].id;
       break;
     }

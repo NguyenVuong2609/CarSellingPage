@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment</title>
+    <link rel="stylesheet" href="/css/payment.css" />
+    <script
+      src="https://kit.fontawesome.com/36502a9996.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+        <nav class="head-nav col-12" id="header">
+            <div class="header col-12">
+              <div class="col-3" id="shop">
+                <img src="/IMG/logoshop.png" alt="" />
+                <a href="/index.html">CUTI</a><span>SHOP</span>
+              </div>
+              <div class="menu col-6">
+                Payment Page
+              </div>
+              <div class="avatar col-3">
+                <ul class="menu-left">
+                  <li>
+                    <input
+                      type="button"
+                      value="Log in"
+                      id="login-button"
+                      class="custom-btn"
+                    />
+                  </li>
+                </ul>
+              </div>
+            </div>
+        </nav>
+    </div>
+    <div id="billShow">
+        <table id="tableCart"></table>
+        <div id="infoPayment">
+            <span id="showTotal"></span>
+            <input type="button" id="confirmPay" value="Confirmed">
+        </div>
+    </div>
+    <div id="userInfo">
+        <div id="bodyUser"></div>
+      </div>
+    <nav class="footer col-12" id="footer"></nav>
+    <div class="col-12 copyright">
+        © Copyright and Designed by <span>Vuong Nguyen</span>
+      </div>
+  </body>
+  <script src="/JS/payment.js"></script>
+</html>
