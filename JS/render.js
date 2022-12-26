@@ -287,6 +287,9 @@ function logOutUser(id) {
   }
   localStorage.setItem("Member", JSON.stringify(user));
   loginBtn.style.display = "block";
+  document.getElementById("tableCart").innerHTML = "";
+  document.getElementById("small").innerHTML = "";
+  document.getElementById("totalCart").innerHTML = "";
   renderUserAction();
 }
 function showProfileUser() {

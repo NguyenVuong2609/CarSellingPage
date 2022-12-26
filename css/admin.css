@@ -181,3 +181,6 @@ body {
 #detailsProduct {
   max-width: 200px;
 }
+.orderData {
+  max-width: 120px;
+}

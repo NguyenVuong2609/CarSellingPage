@@ -104,6 +104,7 @@ function showProfileUser() {
   profileUser.style.display = "block";
 }
 
+var sum = 0;
 function showCart() {
   let flag = JSON.parse(localStorage.getItem("Flag"));
   let getMember = JSON.parse(localStorage.getItem("Member"));
@@ -121,9 +122,9 @@ function showCart() {
     if (myCart == null) {
         console.log(btnconfirmPay.style.display);
         btnconfirmPay.style.display = "none";
+        document.getElementById("tableCart").innerHTML = "";
         document.getElementById('showTotal').innerHTML = "Your cart is empty."
     } else {
-        btnconfirmPay.style.display = "block";
         let dataProduct = `<tr>
           <td>Num</td>
           <td>Picture</td>
@@ -146,6 +147,7 @@ function showCart() {
             `;
             total += myCart[i].quantity * myCart[i].price
         }
+        sum = total;
         document.getElementById('showTotal').innerHTML = "Your total bill is: " + total + " USD";
         document.getElementById("tableCart").innerHTML = dataProduct;
     }
@@ -156,7 +158,6 @@ showCart();
 btnconfirmPay.addEventListener("click", () =>{
     let list = JSON.parse(localStorage.getItem(`${accName}`));
     let pending = JSON.parse(localStorage.getItem("pending"));
-    console.log(list);
     if (pending == null) {
         pending = [];
         pending.push({
@@ -164,7 +165,9 @@ btnconfirmPay.addEventListener("click", () =>{
             bill: {
                 list: list
             },
-            id: pending.length
+            id: pending.length,
+            summary: sum,
+            status: "pending"
         })
         localStorage.removeItem(`${accName}`);
         localStorage.setItem("pending", JSON.stringify(pending));
@@ -174,9 +177,19 @@ btnconfirmPay.addEventListener("click", () =>{
             bill: {
                 list: list
             },
-            id: pending.length
+            id: pending.length,
+            summary: sum,
+            status: "pending"
         })
+        sum = 0;
         localStorage.removeItem(`${accName}`);
         localStorage.setItem("pending", JSON.stringify(pending));
     }
+    alert(`
+    STK: 100800106636
+    Nguyen Duc Vuong
+    Viettinbank CN Bac HN
+    Your bill is No${pending.length}
+    Your content must include your bill's number when banking.`)
+    showCart();
 })

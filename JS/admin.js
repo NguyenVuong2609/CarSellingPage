@@ -7,6 +7,7 @@ const editProbtn = document.getElementById("editPro");
 const addbtnNew = document.getElementById("addbtn");
 const editMembtn = document.getElementById("editMem");
 const showBanlistbtn = document.getElementById("showBanlist");
+const manageOrderbtn = document.getElementById("manageOrder");
 let adminAcc = [
   {
     username: "admin",
@@ -48,7 +49,7 @@ addProMenubtn.addEventListener("click", () => {
   <input type="text" placeholder="Search..." id="search">`;
   document.getElementById("formAdd").innerHTML = data;
   document.getElementById("formAdd").style.display = "block";
-  
+
   //! Tìm kiếm //
   let search = document.getElementById("search");
   search.addEventListener("change", () => {
@@ -90,21 +91,21 @@ addProMenubtn.addEventListener("click", () => {
 let flag;
 function readURL(input) {
   if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-          localStorage.setItem("image",e.target.result)
-      }
-      reader.readAsDataURL(input.files[0]);
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      localStorage.setItem("image", e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
   }
   flag = input;
 }
-function saveIMGUrl(){
+function saveIMGUrl() {
   let imgUrl = localStorage.getItem("image");
   let inputIMG = document.getElementById("inputIMG");
   let inputFile = document.getElementById("inputFile");
   inputIMG.value = imgUrl;
   inputFile.value = "";
-  flag ="";
+  flag = "";
   localStorage.removeItem("image");
 }
 //! Render Product Add/remove//
@@ -190,6 +191,36 @@ function renderMember(member) {
   }
   document.getElementById("data").innerHTML = data;
 }
+//! Render Order //
+function renderOrder(pending) {
+  let list;
+  let orderData = "";
+  let data = `<tr>
+    <th>No.</th>
+    <th>Username</th>
+    <th>Product</th>
+    <th>Total</th>
+    <th>Status</th>
+    <th>Actions</th>
+</tr>`;
+  for (let i = 0; i < pending.length; i++) {
+    list = pending[i].bill.list
+    for (let j = 0; j < list.length; j++) {
+      orderData += (list[j].name + ":" +  list[j].quantity + "pcs ");
+    }
+    data += `<tr>
+        <td>${i + 1}</td>
+        <td>${pending[i].name}</td>
+        <td class="orderData">${orderData}</td>
+        <td>${pending[i].summary}</td>
+        <td>${pending[i].status}</td>
+        <td></td>
+    </tr>
+        `;
+    orderData = "";
+  }
+  document.getElementById("data").innerHTML = data;
+}
 
 //? Render Menu bar //
 function renderMenuBar() {
@@ -207,7 +238,7 @@ function renderMenuBar() {
       <h3>Member</h3>
       <ul>
           <li><input type="button" value="Edit member" class="draw" id="editMem"></li>
-          <li><input type="button" value="Manage Order" class="draw"></li>
+          <li><input type="button" value="Manage Order" class="draw" id="manageOrder"></li>
           <li><input type="button" value="Banned List" class="draw" id="showBanlist"></li>
       </ul>
   </div>
@@ -244,7 +275,7 @@ function newProduct() {
         id: getProduct.length,
         group: group.value,
         quantity: 0,
-        details: details.value
+        details: details.value,
       });
     }
   } else {
@@ -256,7 +287,7 @@ function newProduct() {
         id: getProduct.length,
         group: group.value,
         quantity: 0,
-        details: details.value
+        details: details.value,
       });
     }
   }
@@ -392,7 +423,7 @@ function editPro(id) {
   let img = document.getElementById("inputIMG");
   let price = document.getElementById("inputPrice");
   let group = document.getElementById("inputGroup");
-  let details = document.getElementById("inputDetails")
+  let details = document.getElementById("inputDetails");
   for (let i = 0; i < myList.length; i++) {
     if (myList[i].id == id) {
       name.value = myList[i].name;
@@ -467,3 +498,10 @@ function unbanMem(id) {
   localStorage.setItem("Member", JSON.stringify(getMember));
   renderBanlist();
 }
+
+//! Manage orger //
+manageOrderbtn.addEventListener("click", () => {
+  document.getElementById("formAdd").style.display = "none";
+  let pending = JSON.parse(localStorage.getItem("pending"));
+  renderOrder(pending);
+});
