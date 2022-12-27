@@ -298,7 +298,7 @@ function showProfileUser() {
 
 //! Search Product //
 let search = document.getElementById("search");
-search.addEventListener("change", () => {
+search.addEventListener("keyup", () => {
   let searchProduct = JSON.parse(localStorage.getItem("listProduct"));
   let list = "";
   for (let i = 0; i < searchProduct.length; i++) {
@@ -569,6 +569,8 @@ function addFav(id) {
             `fav${userCartFav}`,
             JSON.stringify(listProductFav)
           );
+          console.log("1");
+          alert("Successfully added!");
           break;
         }
       }
@@ -577,31 +579,26 @@ function addFav(id) {
       let listProductFav = JSON.parse(
         localStorage.getItem(`fav${userCartFav}`)
       );
-      let key = true;
+      let key = false;
       if (listProductFav != null) {
         for (let i = 0; i < listProductFav.length; i++) {
-          //   TODO TH1: Nếu mặt hàng này đã có trong giỏ thì không thêm //
           if (id == listProductFav[i].id) {
             key = true;
-            alert("This product has already been added.");
-            break;
-          } else {
-            //   TODO TH2: Nếu mặt hàng này chưa có trong giỏ thì thêm //
-            key = false;
-            break;
-          }
+          } 
         }
-        if (key == false) {
-          let listProductFav = JSON.parse(
-            localStorage.getItem(`fav${userCartFav}`)
-          );
-          listProductFav.push(cart[id]);
-          console.log(listProductFav);
-          localStorage.setItem(
-            `fav${userCartFav}`,
-            JSON.stringify(listProductFav)
-          );
-        }
+      }
+      if (key) {
+        alert("This product has already been added.");
+      } else {
+        let listProductFav = JSON.parse(
+          localStorage.getItem(`fav${userCartFav}`)
+        );
+        listProductFav.push(cart[id]);
+        localStorage.setItem(
+          `fav${userCartFav}`,
+          JSON.stringify(listProductFav)
+        );
+        alert("Successfully added!");
       }
     }
   } else {

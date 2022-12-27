@@ -85,7 +85,7 @@ if (adminPermission[0].status === "online") {
 
     //! Tìm kiếm //
     let search = document.getElementById("search");
-    search.addEventListener("change", () => {
+    search.addEventListener("keyup", () => {
       let searchProduct = JSON.parse(localStorage.getItem("listProduct"));
       let list = `<tr>
     <th>No.</th>
@@ -410,7 +410,7 @@ if (adminPermission[0].status === "online") {
     });
 
     let search = document.getElementById("search");
-    search.addEventListener("change", () => {
+    search.addEventListener("keyup", () => {
       let searchProduct = JSON.parse(localStorage.getItem("listProduct"));
       let list = `<tr>
     <th>No.</th>
