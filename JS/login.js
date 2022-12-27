@@ -36,7 +36,12 @@ function checkAccount() {
       };
     } else {
       for (let i = 0; i < getMember.length; i++) {
-        if (
+        if (getMember[i].permissions === "banned"){
+          document.getElementById("checkAcc").innerHTML = "Your account has been banned.";
+          document.getElementById("signInform").onsubmit = function (e) {
+            e.preventDefault();
+          };
+        } else if (
           getMember[i].username == inputID.value &&
           getMember[i].password == inputPassword.value && getMember[i].permissions === "actived"
         ) {
