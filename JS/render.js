@@ -56,7 +56,7 @@ function renderProduct() {
                 </div>
                 </div>`;
   document.getElementById("header").innerHTML = data;
-  // setInterval(bannerShow,3000);
+  setInterval(bannerShow,3000);
   let btnDelete = document.getElementById("deleteCart");
   btnDelete.addEventListener("click", () => {
     let flag = JSON.parse(localStorage.getItem("Flag"));
@@ -270,6 +270,7 @@ function savePass() {
   let iconElement = document.getElementById("iconEye");
   iconElement.style.display = "none";
   document.getElementById("profilePassword").setAttribute("disabled", "");
+  alert("Successfully!");
 }
 function closeProfile() {
   profileUser.style.display = "none";
