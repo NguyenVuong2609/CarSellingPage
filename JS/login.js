@@ -26,6 +26,7 @@ let checkMember = JSON.parse(localStorage.getItem("admin"));
 function checkAccount() {
   let inputID = document.getElementById("inputID");
   let inputPassword = document.getElementById("inputPassword");
+  let key = false;
   if (inputID.value != "" && inputPassword.value != "") {
     if (inputID.value == checkMember[0].username && inputPassword.value == checkMember[0].password) {
       checkMember[0].status = "online";
@@ -36,25 +37,29 @@ function checkAccount() {
       };
     } else {
       for (let i = 0; i < getMember.length; i++) {
-        if (getMember[i].permissions === "banned"){
-          document.getElementById("checkAcc").innerHTML = "Your account has been banned.";
-          document.getElementById("signInform").onsubmit = function (e) {
-            e.preventDefault();
-          };
-        } else if (
+        if (
           getMember[i].username == inputID.value &&
-          getMember[i].password == inputPassword.value && getMember[i].permissions === "actived"
+          getMember[i].password == inputPassword.value
         ) {
-          getMember[i].status = true;
-          flag = true;
-          localStorage.setItem("Flag", JSON.stringify(flag));
-          localStorage.setItem("Member", JSON.stringify(getMember));
-          window.location = "/index.html";
-          document.getElementById("signInform").onsubmit = function (e) {
-            e.preventDefault();
-          };
-          break;
-        } else {
+          key = true;
+          if (getMember[i].permissions === "actived") {
+            getMember[i].status = true;
+            flag = true;
+            localStorage.setItem("Flag", JSON.stringify(flag));
+            localStorage.setItem("Member", JSON.stringify(getMember));
+            window.location = "/index.html";
+            document.getElementById("signInform").onsubmit = function (e) {
+              e.preventDefault();
+            };
+            break;
+          } else if (getMember[i].permissions === "banned") {
+            document.getElementById("checkAcc").innerHTML = "Your account has been banned.";
+            document.getElementById("signInform").onsubmit = function (e) {
+              e.preventDefault();
+            };
+          }
+        } 
+        if (key == false){
           document.getElementById("checkAcc").innerHTML =
             "Sai mật khẩu hoặc tài khoản.";
           document.getElementById("losePassword").style.display = "block";
